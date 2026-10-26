@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EJEPRINT · Diseño e impresión 3D en Guatemala</title>
+<meta name="description" content="Diseño e impresión 3D en Guatemala. Personalizados, prototipos, repuestos y pedidos para negocios. Cotizá en línea en 30 segundos.">
+<meta name="theme-color" content="#1f1d1b">
+<meta property="og:title" content="EJEPRINT · Diseño e impresión 3D en Guatemala">
+<meta property="og:description" content="Si no existe, lo diseñamos. Personalizados, prototipos, repuestos y pedidos para negocios.">
+
+<!-- ==========================================================
+     Lo único que necesitás editar está en el bloque CONFIG,
+     al final del archivo. Buscá la palabra CONFIG.
+     ========================================================== -->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f1d1b'/%3E%3Crect x='5' y='24' width='22' height='3' rx='1' fill='%23b08a4a'/%3E%3Crect x='8' y='18' width='16' height='4' rx='1' fill='%23ce2229'/%3E%3Crect x='10' y='12' width='12' height='4' rx='1' fill='%23ce2229'/%3E%3Crect x='12' y='6' width='8' height='4' rx='1' fill='%23ce2229'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --hueso:#e7e5df;      /* plástico crudo */
+  --hueso-2:#f1efea;
+  --grafito:#1f1d1b;
+  --grafito-2:#4a4743;
+  --gris:#77746d;
+  --linea:#cdcac2;
+  --rojo:#ce2229;       /* PLA rojo */
+  --rojo-vivo:#ff5434;  /* plástico recién extruido */
+  --oro:#b08a4a;        /* placa PEI */
+  --camara:#24221f;
+  --max:1200px;
+  --display:'Archivo',system-ui,sans-serif;
+  --texto:'IBM Plex Sans',system-ui,sans-serif;
+  --maquina:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--hueso);color:var(--grafito);font-family:var(--texto);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--rojo);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.t-display{font-family:var(--display);font-stretch:125%;font-weight:850;letter-spacing:-.035em;line-height:.92}
+
+/* ---------- navegación ---------- */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--hueso) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.nav{display:flex;align-items:center;gap:28px;height:68px}
+.marca{font-family:var(--display);font-stretch:125%;font-weight:900;font-size:21px;letter-spacing:-.04em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.marca .capas{display:grid;gap:2px;width:16px}
+.marca .capas i{display:block;height:3px;border-radius:1px;background:var(--rojo);margin:0 auto}
+.marca .capas i:nth-child(1){width:50%}.marca .capas i:nth-child(2){width:75%}.marca .capas i:nth-child(3){width:100%}
+.marca .capas i:nth-child(4){width:100%;background:var(--oro)}
+.nav nav{margin-left:auto;display:flex;gap:26px;font-size:15.5px}
+.nav nav a{text-decoration:none;color:var(--grafito-2)}
+.nav nav a:hover{color:var(--grafito)}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:50px;padding:12px 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:2px solid var(--grafito);transition:background .15s,color .15s,border-color .15s;cursor:pointer;font-family:inherit}
+.btn-oscuro{background:var(--grafito);color:var(--hueso)}
+.btn-oscuro:hover{background:var(--rojo);border-color:var(--rojo)}
+.btn-linea{background:transparent;color:var(--grafito)}
+.btn-linea:hover{background:var(--grafito);color:var(--hueso)}
+.btn-rojo{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.btn-rojo:hover{background:#b01b21;border-color:#b01b21}
+.btn svg{width:20px;height:20px;flex:none}
+.nav .btn{min-height:42px;padding:8px 18px;font-size:15px}
+.menu{display:none}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 56px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,6.1vw,84px);font-stretch:114%}
+.hero h1 span{display:block}
+.hero .lede{font-size:clamp(17px,1.6vw,20px);color:var(--grafito-2);max-width:44ch;margin-top:26px}
+.hero-acc{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.donde{margin-top:22px;font-size:14.5px;color:var(--gris)}
+
+/* la cámara de la impresora */
+.camara{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/4.3;
+  background:
+    radial-gradient(120% 70% at 50% -10%,rgba(255,236,200,.16),transparent 60%),
+    linear-gradient(180deg,#2b2926,var(--camara) 55%,#1c1a18);
+  color:#e9e6df;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 30px 60px -30px rgba(31,29,27,.55)}
+.camara::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(130% 100% at 50% 40%,transparent 55%,rgba(0,0,0,.45));}
+.escena{position:absolute;inset:52px 0 126px}
+.escena svg{width:100%;height:100%;display:block}
+.hud{position:absolute;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 22px;font-family:var(--maquina);font-size:12.5px;color:rgba(233,230,223,.78)}
+.hud-arriba{top:0}
+.hud-abajo{bottom:0;flex-direction:column;align-items:stretch;gap:10px}
+.vivo{display:inline-flex;align-items:center;gap:8px;color:#e9e6df}
+.vivo i{width:8px;height:8px;border-radius:50%;background:var(--rojo-vivo);box-shadow:0 0 0 0 rgba(255,84,52,.6);animation:pulso 1.6s infinite}
+.vivo.listo i{background:#7fcf8f;animation:none}
+@keyframes pulso{70%{box-shadow:0 0 0 8px rgba(255,84,52,0)}100%{box-shadow:0 0 0 0 rgba(255,84,52,0)}}
+.barra-prog{height:4px;border-radius:2px;background:rgba(255,255,255,.12);overflow:hidden}
+.barra-prog span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rojo),var(--rojo-vivo))}
+.hud-datos{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:6px 14px}
+.hud-datos b{display:block;font-weight:500;color:#f4f1ea;font-size:14px}
+.gcode{color:rgba(233,230,223,.42);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.capa{transition:fill .5s ease}
+.boquilla{transition:transform .9s cubic-bezier(.3,.7,.3,1)}
+.boquilla.viajando{transition:none}
+#figura.saliendo{transition:opacity .6s;opacity:0}
+
+/* datos de la máquina */
+.ficha{display:grid;grid-template-columns:repeat(4,1fr);border-top:1.5px solid var(--grafito);margin-top:56px}
+.ficha div{padding:18px 18px 4px 0}
+.ficha div+div{padding-left:18px;border-left:1px solid var(--linea)}
+.ficha b{display:block;font-family:var(--display);font-stretch:118%;font-weight:800;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.025em;line-height:1.1}
+.ficha span{font-size:14.5px;color:var(--grafito-2)}
+
+/* ---------- secciones ---------- */
+section{padding:96px 0}
+.tit{font-size:clamp(34px,4.6vw,58px)}
+.sub{color:var(--grafito-2);max-width:56ch;margin-top:16px;font-size:18px}
+
+/* qué hacemos */
+.servicios{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+.servicios .izq{position:sticky;top:110px}
+.serv-lista{list-style:none;border-top:1px solid var(--linea)}
+.serv-lista li{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:28px 0;border-bottom:1px solid var(--linea)}
+.serv-ico{width:52px;height:52px;border-radius:14px;background:var(--grafito);display:grid;place-items:center}
+.serv-ico svg{width:26px;height:26px;stroke:var(--hueso);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.serv-lista h3{font-family:var(--display);font-stretch:115%;font-weight:750;font-size:22px;letter-spacing:-.015em;line-height:1.2;margin-bottom:6px}
+.serv-lista p{color:var(--grafito-2);font-size:16.5px}
+
+/* catálogo */
+.catalogo{background:var(--grafito);color:var(--hueso)}
+.catalogo .sub{color:#bdb9b0}
+.cat-cab{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:44px}
+.cat-cab .btn-linea{border-color:var(--hueso);color:var(--hueso)}
+.cat-cab .btn-linea:hover{background:var(--hueso);color:var(--grafito)}
+.cat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 28px}
+.pieza .foto{aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:#2e2b28;position:relative}
+.pieza .foto img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.pieza:hover .foto img{transform:scale(1.035)}
+.pieza .sin-foto{position:absolute;inset:0;display:grid;place-items:center;
+  background:repeating-linear-gradient(0deg,rgba(231,229,223,.06) 0 3px,transparent 3px 7px)}
+.pieza .sin-foto span{font-size:14px;color:#9a968d}
+.pieza .info{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:16px}
+.pieza h3{font-family:var(--display);font-stretch:112%;font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1.25}
+.pieza .precio{font-weight:600;white-space:nowrap;color:#ff8a70}
+.pieza p{color:#bdb9b0;font-size:15.5px;margin-top:4px;max-width:40ch}
+
+/* cotizador */
+.cot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.86fr);gap:48px;align-items:start;margin-top:48px}
+.campo{margin-bottom:26px}
+.campo>label,.campo>p{display:block;font-weight:600;margin-bottom:10px}
+.campo small{display:block;font-weight:400;color:var(--gris);font-size:14px;margin-top:2px}
+select,input[type=number]{width:100%;font:inherit;font-size:17px;padding:14px 16px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--grafito) 30%,transparent);background:var(--hueso-2);color:var(--grafito)}
+select:focus,input:focus{outline:none;border-color:var(--grafito);box-shadow:0 0 0 4px color-mix(in srgb,var(--rojo) 22%,transparent)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:inline-block;padding:11px 18px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--grafito) 30%,transparent);background:var(--hueso-2);cursor:pointer;font-size:15.5px;user-select:none}
+.opt input:checked+span{background:var(--grafito);border-color:var(--grafito);color:var(--hueso)}
+.opt input:focus-visible+span{outline:3px solid var(--rojo);outline-offset:2px}
+.resultado{position:sticky;top:96px;border-radius:22px;padding:30px;color:#e9e6df;
+  background:radial-gradient(120% 60% at 50% -10%,rgba(255,236,200,.12),transparent 60%),var(--camara)}
+.res-etq{font-size:14.5px;color:#a9a59c}
+.res-num{font-family:var(--display);font-stretch:125%;font-weight:850;font-size:clamp(40px,5vw,60px);letter-spacing:-.04em;line-height:1;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.res-meta{margin-top:22px;border-top:1px solid rgba(255,255,255,.1)}
+.res-meta div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15.5px}
+.res-meta span{color:#a9a59c}
+.res-meta strong{text-align:right;font-weight:600}
+.res-nota{font-size:13.5px;color:#8f8b83;margin-top:16px;line-height:1.55}
+.resultado .btn{width:100%;margin-top:22px}
+.consejo{margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.06);font-size:14.5px;color:#d6d2c9}
+
+/* colores */
+.colores{background:var(--hueso-2);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+.rollos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;margin-top:48px}
+.rollo{text-align:left}
+.carrete{aspect-ratio:1;border-radius:50%;max-width:150px;
+  background:radial-gradient(circle closest-side,var(--hueso-2) 0 17%,#bdb9b0 17.5% 23%,var(--c) 23.5% 86%,color-mix(in srgb,var(--c) 70%,#000) 86.5% 90%,#3b3835 90.5% 100%,transparent 100.5%);
+  box-shadow:0 18px 30px -18px rgba(31,29,27,.45)}
+.rollo h3{font-family:var(--display);font-stretch:112%;font-weight:750;font-size:19px;margin-top:18px}
+.rollo p{font-size:15px;color:var(--grafito-2);margin-top:4px}
+.aviso-calor{margin-top:48px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;max-width:760px;padding:22px 24px;border-radius:16px;background:var(--hueso);border:1px solid var(--linea)}
+.aviso-calor b{font-family:var(--display);font-stretch:120%;font-weight:850;font-size:34px;color:var(--rojo);line-height:1}
+.aviso-calor p{color:var(--grafito-2);font-size:16px}
+
+/* proceso: sí es una secuencia */
+.pasos{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:56px;counter-reset:p;position:relative}
+.pasos::before{content:'';position:absolute;left:0;right:0;top:21px;height:2px;background:linear-gradient(90deg,var(--rojo),var(--rojo) 0,var(--linea) 0)}
+.pasos li{counter-increment:p;position:relative;padding-top:64px}
+.pasos li::before{content:counter(p);position:absolute;top:0;left:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--hueso);border:2px solid var(--grafito);font-family:var(--display);font-weight:800;font-size:18px}
+.pasos li:last-child::before{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.pasos h3{font-family:var(--display);font-stretch:112%;font-weight:750;font-size:20px;margin-bottom:6px}
+.pasos p{color:var(--grafito-2);font-size:16px}
+
+/* preguntas */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:64px}
+details{border-bottom:1px solid var(--linea)}
+details:first-child{border-top:1px solid var(--linea)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;padding:22px 0;font-family:var(--display);font-stretch:110%;font-weight:700;font-size:19px;letter-spacing:-.01em}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'';flex:none;width:14px;height:14px;margin-top:6px;border-right:2px solid var(--rojo);border-bottom:2px solid var(--rojo);transform:rotate(45deg);transition:transform .2s}
+details[open] summary::after{transform:rotate(225deg)}
+details p{color:var(--grafito-2);padding:0 0 24px;max-width:62ch}
+
+/* cierre */
+.cierre{background:var(--rojo);color:#fff;padding:88px 0}
+.cierre .wrap{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap}
+.cierre h2{font-size:clamp(38px,5.6vw,76px);max-width:14ch}
+.cierre .btn{background:#fff;border-color:#fff;color:var(--grafito)}
+.cierre .btn:hover{background:var(--grafito);border-color:var(--grafito);color:#fff}
+
+footer{background:var(--grafito);color:#cfcbc2;padding:56px 0 calc(32px + env(safe-area-inset-bottom))}
+.pie{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+footer .marca{color:var(--hueso)}
+footer p{font-size:15px;margin-top:12px;max-width:34ch}
+footer h3{font-size:14.5px;font-weight:600;color:#8f8b83;margin-bottom:10px}
+footer nav a{display:block;text-decoration:none;padding:5px 0;font-size:15.5px}
+footer nav a:hover{color:#fff}
+.pie-fin{max-width:none!important;margin-top:44px;padding-top:20px;border-top:1px solid #3a3734;font-size:13.5px;color:#8f8b83}
+
+/* barra flotante en el teléfono */
+.flota{display:none}
+
+@media (max-width:960px){
+  .hero-grid,.servicios,.cot-grid,.faq-grid{grid-template-columns:1fr}
+  .hero-grid{gap:36px}
+  .servicios{gap:32px}.servicios .izq{position:static}
+  .faq-grid{gap:24px}
+  .resultado{position:static}
+  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rollos{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ficha{grid-template-columns:repeat(2,1fr)}
+  .ficha div:nth-child(3){padding-left:0;border-left:0}
+}
+@media (max-width:720px){
+  body{font-size:16.5px}
+  .wrap{padding:0 18px}
+  section{padding:68px 0}
+  .hero{padding:32px 0 40px}
+  .nav nav{display:none}
+  .nav nav.abierto{display:flex;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--hueso-2);border-bottom:1px solid var(--linea);padding:6px 18px}
+  .nav nav.abierto a{padding:14px 0;border-bottom:1px solid var(--linea)}
+  .nav nav.abierto a:last-child{border-bottom:0}
+  .nav .btn{display:none}
+  .menu{display:inline-flex;margin-left:auto;min-height:42px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--grafito);background:none;font:inherit;font-weight:600;font-size:15px;cursor:pointer;color:var(--grafito)}
+  .camara{aspect-ratio:1/1.12;border-radius:18px}
+  .escena{inset:46px 0 112px}
+  .hud{padding:13px 15px;font-size:11px}
+  .hud-datos b{font-size:13px}
+  .hud-abajo{gap:8px}
+  .ficha{margin-top:36px}
+  .cat-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;margin:0 -18px;padding:0 18px 8px;scrollbar-width:none}
+  .cat-grid::-webkit-scrollbar{display:none}
+  .pieza{flex:0 0 78%;scroll-snap-align:start}
+  .rollos{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
+  .pasos{grid-template-columns:1fr;gap:0}
+  .pasos::before{left:21px;right:auto;top:0;bottom:0;width:2px;height:auto;background:var(--linea)}
+  .pasos li{padding:0 0 30px 66px}
+  .pie{grid-template-columns:1fr 1fr}
+  .pie>div:first-child{grid-column:1/-1}
+  .flota{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;
+    transform:translateY(140%);transition:transform .3s ease}
+  .flota.visible{transform:none}
+  .flota .btn{width:100%;box-shadow:0 14px 30px -12px rgba(31,29,27,.55)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="marca" href="#inicio" aria-label="EJEPRINT, inicio"><span class="capas" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-marca>EJEPRINT</span></a>
+    <nav id="menu">
+      <a href="#hacemos">Qué hacemos</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#cotizar">Cotizar</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <a class="btn btn-oscuro" data-wa href="#">Escribir por WhatsApp</a>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 class="t-display"><span>Lo que necesitás,</span><span>capa por capa.</span></h1>
+        <p class="lede">Diseño e impresión 3D en Guatemala. Personalizados, prototipos, repuestos que ya no se consiguen y pedidos para negocios. Si no existe el archivo, lo diseñamos.</p>
+        <div class="hero-acc">
+          <a class="btn btn-oscuro" href="#cotizar">Cotizar mi pieza</a>
+          <a class="btn btn-linea" href="#catalogo">Ver el catálogo</a>
+        </div>
+        <p class="donde">Entregas en la ciudad y envíos a todo el país.</p>
+      </div>
+
+      <div class="camara" role="img" aria-label="Vista de la cámara de la impresora: una pieza imprimiéndose capa por capa">
+        <div class="hud hud-arriba" aria-hidden="true">
+          <span class="vivo" id="estado"><i></i><span id="estado-txt">Imprimiendo</span></span>
+          <span id="pieza-nombre">Kobra S1</span>
+        </div>
+        <div class="escena" aria-hidden="true">
+          <svg viewBox="0 28 320 268" preserveAspectRatio="xMidYMax meet">
+            <defs>
+              <pattern id="pei" width="4" height="4" patternUnits="userSpaceOnUse">
+                <rect width="4" height="4" fill="#b08a4a"/>
+                <circle cx="1" cy="1" r=".7" fill="#c9a364"/>
+                <circle cx="3" cy="3" r=".6" fill="#93713a"/>
+              </pattern>
+              <linearGradient id="brillo" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="272" width="280" height="12" rx="3" fill="url(#pei)"/>
+            <rect x="20" y="272" width="280" height="3" rx="1.5" fill="url(#brillo)"/>
+            <ellipse cx="160" cy="290" rx="150" ry="6" fill="#000" opacity=".35"/>
+            <g id="figura"></g>
+            <g class="boquilla" id="boquilla">
+              <rect x="145" y="-40" width="30" height="34" rx="5" fill="#3b3835"/>
+              <rect x="148" y="-36" width="24" height="5" rx="2" fill="#57534e"/>
+              <rect x="152" y="-6" width="16" height="9" rx="2" fill="#8a857c"/>
+              <path d="M155 3 L165 3 L161.5 11 L158.5 11 Z" fill="#d8c08e"/>
+              <circle cx="160" cy="12" r="3" fill="#ff5434" opacity=".0" id="punta"/>
+            </g>
+          </svg>
+        </div>
+        <div class="hud hud-abajo" aria-hidden="true">
+          <div class="barra-prog"><span id="prog"></span></div>
+          <div class="hud-datos">
+            <span>Capa<b id="h-capa">0/0</b></span>
+            <span>Avance<b id="h-pct">0%</b></span>
+            <span>Boquilla<b id="h-temp">215°C</b></span>
+            <span>Restante<b id="h-rest">0 min</b></span>
+          </div>
+          <div class="gcode" id="gcode">G28 ; home</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ficha">
+      <div><b>0.12 mm</b><span>capas finas para piezas con detalle</span></div>
+      <div><b>4 colores</b><span>en una misma pieza, sin pintar</span></div>
+      <div><b>25 cm</b><span>de alto, ancho y fondo por pieza</span></div>
+      <div><b>A medida</b><span>diseño propio en Fusion 360</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUÉ HACEMOS ================= -->
+<section id="hacemos">
+  <div class="wrap servicios">
+    <div class="izq">
+      <h2 class="tit t-display">Qué hacemos</h2>
+      <p class="sub">Imprimimos el diseño que tengas en mente. Si el archivo no existe, lo modelamos desde cero, ya sea algo creativo o una pieza exacta a la medida.</p>
+    </div>
+    <ul class="serv-lista">
+      <li>
+        <span class="serv-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></span>
+        <div><h3>Personalizados y regalos</h3><p>Llaveros con nombre, placas, adornos y detalles para cumpleaños, graduaciones y fechas especiales. Con tu nombre, tu logo o tu idea.</p></div>
+      </li>
+      <li>
+        <span class="serv-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span>
+        <div><h3>Repuestos y piezas funcionales</h3><p>La perilla de la estufa, el engranaje del electrodoméstico, el soporte que se quebró. Si ya no se consigue, se modela y se imprime.</p></div>
+      </li>
+      <li>
+        <span class="serv-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M8 7V4M16 7V4M8 12h2M14 12h2M9 15.5h6"/></svg></span>
+        <div><h3>Prototipos y proyectos</h3><p>Cajas para circuitos, carcasas, soportes y prototipos para la universidad o el trabajo. Te entregamos la pieza y, si lo querés, también el archivo.</p></div>
+      </li>
+      <li>
+        <span class="serv-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg></span>
+        <div><h3>Pedidos para negocios</h3><p>Llaveros con logo, displays de mostrador, señalética, porta tarjetas y recuerdos de evento. Precio por volumen desde 10 piezas.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= CATÁLOGO ================= -->
+<section id="catalogo" class="catalogo">
+  <div class="wrap">
+    <div class="cat-cab">
+      <div>
+        <h2 class="tit t-display">Catálogo</h2>
+        <p class="sub">Piezas que ya hicimos y podemos repetir. Cualquiera sale en nuestros cinco colores y casi todas se pueden personalizar con un nombre.</p>
+      </div>
+      <a class="btn btn-linea" data-wa href="#">Pedir algo que no está aquí</a>
+    </div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</section>
+
+<!-- ================= COTIZADOR ================= -->
+<section id="cotizar">
+  <div class="wrap">
+    <h2 class="tit t-display">Cotizá tu pieza</h2>
+    <p class="sub">Respondé cinco preguntas y te damos un rango de precio al instante. El precio exacto lo confirmamos cuando veamos el archivo o una foto.</p>
+
+    <div class="cot-grid">
+      <form id="q-form" onsubmit="return false">
+        <div class="campo">
+          <label for="q-tipo">¿Qué querés imprimir?</label>
+          <select id="q-tipo">
+            <option value="pequeno">Llavero o pieza pequeña personalizada</option>
+            <option value="decorativo">Figura o pieza decorativa</option>
+            <option value="funcional">Repuesto o pieza funcional</option>
+            <option value="grande">Pieza grande (maceta, lámpara, casco)</option>
+            <option value="negocio">Pedido para mi negocio</option>
+          </select>
+        </div>
+        <div class="campo">
+          <p id="l-tam">¿De qué tamaño?<small>Comparado con algo que ya conocés.</small></p>
+          <div class="opts" role="radiogroup" aria-labelledby="l-tam">
+            <label class="opt"><input type="radio" name="tam" value="0.7"><span>Cabe en la mano</span></label>
+            <label class="opt"><input type="radio" name="tam" value="1" checked><span>Como una taza</span></label>
+            <label class="opt"><input type="radio" name="tam" value="1.7"><span>Más grande</span></label>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="q-cant">¿Cuántas piezas?<small>Desde 10 unidades el precio por pieza baja bastante.</small></label>
+          <input type="number" id="q-cant" min="1" max="500" value="1" step="1" inputmode="numeric">
+        </div>
+        <div class="campo">
+          <p id="l-dis">¿Ya tenés el diseño?</p>
+          <div class="opts" role="radiogroup" aria-labelledby="l-dis">
+            <label class="opt"><input type="radio" name="dis" value="archivo"><span>Tengo el archivo 3D</span></label>
+            <label class="opt"><input type="radio" name="dis" value="simple" checked><span>Solo un nombre o logo</span></label>
+            <label class="opt"><input type="radio" name="dis" value="cero"><span>Hay que diseñarlo</span></label>
+          </div>
+        </div>
+        <div class="campo">
+          <p id="l-col">¿Un color o varios?<small>El multicolor gasta más material y lleva más tiempo.</small></p>
+          <div class="opts" role="radiogroup" aria-labelledby="l-col">
+            <label class="opt"><input type="radio" name="col" value="1" checked><span>Un color</span></label>
+            <label class="opt"><input type="radio" name="col" value="2"><span>Dos o más</span></label>
+          </div>
+        </div>
+      </form>
+
+      <div class="resultado" aria-live="polite">
+        <p class="res-etq">Precio estimado</p>
+        <p class="res-num" id="q-precio">Q0</p>
+        <div class="res-meta">
+          <div><span>Precio por pieza</span><strong id="q-unit">—</strong></div>
+          <div><span>Listo en</span><strong id="q-dias">—</strong></div>
+          <div><span>Colores</span><strong>Rojo, blanco, negro, azul o amarillo</strong></div>
+        </div>
+        <p class="res-nota">Incluye material, impresión, acabado y empaque. Es un estimado automático: el precio final se confirma al ver el archivo o la foto. Los pedidos personalizados llevan 50% de anticipo.</p>
+        <a class="btn btn-rojo" id="q-wa" href="#">Enviar esta cotización por WhatsApp</a>
+        <p class="consejo" id="q-tip"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLORES ================= -->
+<section class="colores" id="colores">
+  <div class="wrap">
+    <h2 class="tit t-display">Cinco colores, listos para imprimir</h2>
+    <p class="sub">Trabajamos con PLA: rígido, con muy buen acabado y detalle fino. Ideal para piezas de interior.</p>
+    <div class="rollos">
+      <div class="rollo"><div class="carrete" data-c="#ce2229"></div><h3>Rojo</h3><p>El más vistoso. Para llaveros, adornos y displays.</p></div>
+      <div class="rollo"><div class="carrete" data-c="#f4f2ec"></div><h3>Blanco</h3><p>Neutro y limpio. El mejor si lo vas a pintar.</p></div>
+      <div class="rollo"><div class="carrete" data-c="#1f1d1b"></div><h3>Negro</h3><p>Esconde las capas. Para carcasas y soportes.</p></div>
+      <div class="rollo"><div class="carrete" data-c="#1f63b5"></div><h3>Azul</h3><p>Vibrante y con buena definición en cada capa.</p></div>
+      <div class="rollo"><div class="carrete" data-c="#e9b10f"></div><h3>Amarillo</h3><p>El que más resalta. Para señales y detalles infantiles.</p></div>
+    </div>
+    <div class="aviso-calor">
+      <b>55°C</b>
+      <p>Arriba de esa temperatura el PLA se deforma: no sirve dentro de un carro ni al sol directo. Si tu pieza va a estar a la intemperie, decinos y buscamos el material adecuado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESO ================= -->
+<section id="proceso">
+  <div class="wrap">
+    <h2 class="tit t-display">Cómo funciona</h2>
+    <ol class="pasos">
+      <li><h3>Nos contás qué necesitás</h3><p>Mandanos el archivo, una foto de la pieza rota o solo la idea. Con eso basta para empezar.</p></li>
+      <li><h3>Te pasamos la cotización</h3><p>Precio cerrado, tiempo de entrega y una vista previa del diseño si hay que modelarlo.</p></li>
+      <li><h3>Se imprime</h3><p>Con el 50% de anticipo entra a la cola. Te mandamos foto cuando esté saliendo de la impresora.</p></li>
+      <li><h3>Lo recibís</h3><p>Coordinamos la entrega. El envío va incluido con tu compra.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= PREGUNTAS ================= -->
+<section id="preguntas" class="colores">
+  <div class="wrap faq-grid">
+    <div><h2 class="tit t-display">Preguntas</h2><p class="sub">Lo que más nos preguntan antes de pedir.</p></div>
+    <div>
+      <details open><summary>¿Cuánto se tarda?</summary><p>Depende del tamaño y de la cola de pedidos. Una pieza pequeña normalmente sale en 2 o 3 días. Algo grande o que haya que diseñar desde cero puede tomar una semana. Si tenés una fecha límite, decínosla desde el principio y te decimos con franqueza si llegamos.</p></details>
+      <details><summary>No tengo el archivo 3D, solo una idea. ¿Sirve?</summary><p>Sí, y es lo más común. Diseñamos en Fusion 360: con una foto, un dibujo a mano o las medidas aproximadas lo podemos modelar. Si es una pieza rota, mandá fotos desde varios ángulos con una regla al lado para tener la escala.</p></details>
+      <details><summary>¿Qué tan resistente es una pieza impresa?</summary><p>Más de lo que la gente espera. Una pieza bien impresa aguanta el uso normal sin problema. Lo que no aguanta el PLA es el calor: arriba de 55°C se deforma. Para esos casos hay otros materiales y lo conversamos antes.</p></details>
+      <details><summary>¿Hacen pedidos grandes para empresas?</summary><p>Sí. Desde 10 piezas el precio por unidad baja bastante, y desde 25 baja más. Hacemos llaveros con logo, displays, señalética, porta tarjetas y recuerdos de evento.</p></details>
+      <details><summary>¿Cómo se paga y cómo se entrega?</summary><p>Transferencia o efectivo. Los pedidos personalizados llevan 50% de anticipo para entrar a la cola y el resto contra entrega. Enviamos a toda Guatemala por mensajería.</p></details>
+      <details><summary>¿Y si la pieza sale mal?</summary><p>Si es un defecto de impresión, la reimprimimos sin costo. No aplica devolución en piezas personalizadas que salieron según lo acordado, porque no se le pueden vender a nadie más.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cierre">
+  <div class="wrap">
+    <h2 class="t-display">¿Tenés una idea o una pieza rota?</h2>
+    <a class="btn" data-wa href="#">Escribinos por WhatsApp</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="pie">
+      <div>
+        <a class="marca" href="#inicio"><span class="capas" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-marca>EJEPRINT</span></a>
+        <p>Diseño e impresión 3D en Guatemala. Envíos a todo el país.</p>
+      </div>
+      <nav aria-label="Contacto"><h3>Escribinos</h3><a data-wa href="#">WhatsApp</a><a data-ig href="#" rel="noopener" target="_blank">Instagram</a><a data-tt href="#" rel="noopener" target="_blank">TikTok</a></nav>
+      <nav aria-label="Secciones"><h3>El sitio</h3><a href="#catalogo">Catálogo</a><a href="#cotizar">Cotizar</a><a href="#colores">Colores</a><a href="#preguntas">Preguntas</a></nav>
+    </div>
+    <p class="pie-fin">© <span id="anio"></span> <span data-marca>EJEPRINT</span>. Guatemala.</p>
+  </div>
+</footer>
+
+<div class="flota" id="flota"><a class="btn btn-oscuro" href="#cotizar">Cotizar mi pieza</a></div>
+
+<script>
+/* ============================================================
+   CONFIG  ·  LO ÚNICO QUE TENÉS QUE EDITAR
+   ============================================================ */
+const CONFIG = {
+  marca:     "EJEPRINT",
+  whatsapp:  "50255673291",   // 502 + tu número, sin espacios
+  instagram: "https://www.instagram.com/ejeprint",
+  tiktok:    "https://www.tiktok.com/@ejeprintgt",
+
+  // Mismos números que tu app (Ajustes). Si cambiás allá, cambialos aquí.
+  costos: {
+    filamentoQg:  0.169,
+    factorFallos: 1.12,
+    horaMaquina:  2.27,
+    postQhora:    30,
+    disenoQhora:  100,
+    empaque:      6,
+    minimo:       50
+  },
+
+  // Material y tiempo que asume cada tipo de pieza (por unidad).
+  tipos: {
+    pequeno:    { gramos: 9,   horas: 0.45, minPost: 4,  mult: 4.6, nombre:"Llavero o pieza pequeña personalizada" },
+    decorativo: { gramos: 85,  horas: 3.8,  minPost: 10, mult: 4.0, nombre:"Figura o pieza decorativa" },
+    funcional:  { gramos: 45,  horas: 2.4,  minPost: 8,  mult: 2.3, nombre:"Repuesto o pieza funcional" },
+    grande:     { gramos: 240, horas: 10.5, minPost: 20, mult: 3.4, nombre:"Pieza grande" },
+    negocio:    { gramos: 30,  horas: 1.4,  minPost: 6,  mult: 3.0, nombre:"Pedido para negocio" }
+  },
+  diseno: { archivo: 0, simple: 0.25, cero: 2.5 },
+  multDiseno: 1.25,
+  rango: { bajo: 0.90, alto: 1.25 },
+  volumen: [ {desde: 25, factor: 0.78}, {desde: 10, factor: 0.86} ],
+  multMinimo: 1.9,
+  horasPorDia: 8,
+
+  /* --- CATÁLOGO ---
+     La foto va en la carpeta img/ junto a este archivo.
+     El nombre tiene que coincidir letra por letra (mayúsculas incluidas). */
+  catalogo: [
+    { nombre:"Llaveros personalizados", desc:"Con tu nombre, tus iniciales o tus colores favoritos.", precio:"Desde Q30 c/u", foto:"img/Llaveros.jpeg" },
+    { nombre:"Diseño a tu medida", desc:"¿Tenés la idea pero no el archivo? Lo diseñamos para que calce exacto.", precio:"Desde Q95", foto:"img/Funda.jpeg" },
+    { nombre:"Recuerditos", desc:"Detalles pequeños para regalar en cumpleaños, bodas o eventos.", precio:"Desde Q25", foto:"img/Gatitos.jpeg" },
+    { nombre:"Proyectos completos", desc:"Lo diseñamos, lo imprimimos y te lo entregamos armado.", precio:"Desde Q150", foto:"img/Rueda.jpeg" },
+    { nombre:"Figuras articuladas", desc:"Salen armadas de la impresora y todas las articulaciones se mueven.", precio:"Desde Q65", foto:"img/cangrejo.jpeg" },
+    { nombre:"Regalos con presupuesto", desc:"Ideas que gustan y se ajustan a tu bolsillo.", precio:"Desde Q30", foto:"img/Lagarto.jpeg" }
+  ]
+};
+
+/* ============================================================
+   De aquí para abajo no necesitás tocar nada.
+   ============================================================ */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const waBase = "https://wa.me/" + CONFIG.whatsapp;
+document.querySelectorAll('[data-marca]').forEach(e => e.textContent = CONFIG.marca);
+document.querySelectorAll('[data-wa]').forEach(a => a.href = waBase + "?text=" + encodeURIComponent("¡Hola! Vi su página y quiero cotizar una pieza."));
+document.querySelectorAll('[data-ig]').forEach(a => a.href = CONFIG.instagram);
+document.querySelectorAll('[data-tt]').forEach(a => a.href = CONFIG.tiktok);
+document.getElementById('anio').textContent = new Date().getFullYear();
+document.querySelectorAll('[data-c]').forEach(e => e.style.setProperty('--c', e.dataset.c));
+
+// menú del teléfono
+(() => {
+  const b = document.querySelector('.menu'), m = document.getElementById('menu');
+  b.addEventListener('click', () => b.setAttribute('aria-expanded', m.classList.toggle('abierto')));
+  m.addEventListener('click', e => { if (e.target.tagName === 'A') { m.classList.remove('abierto'); b.setAttribute('aria-expanded', false); } });
+})();
+
+/* ---------- la cámara: rebana una figura y la imprime capa por capa ---------- */
+(() => {
+  const FIGURAS = {
+    perro:{n:"Perro",d:"M132 150 L214 150 C232 150 244 164 244 182 L244 212 C244 226 232 236 216 236 L138 236 C120 236 108 224 108 208 L108 176 C108 162 118 150 132 150 Z M110 106 C130 106 146 122 146 142 L146 178 L100 178 L100 162 L56 162 C48 162 42 156 42 148 L42 134 C42 126 48 120 56 120 L72 120 C78 112 92 106 110 106 Z M104 108 C90 112 84 130 88 150 C91 164 104 172 114 168 L116 112 Z M240 176 C258 166 268 146 264 128 C262 118 250 116 246 124 C242 132 250 138 256 134 C254 150 244 162 232 168 Z M132 232 L152 232 L152 266 C152 270 149 272 145 272 L128 272 C124 272 122 270 122 266 C122 260 126 258 132 258 Z M164 232 L182 232 L182 266 C182 270 179 272 175 272 L160 272 C156 272 154 270 154 266 C154 260 158 258 164 258 Z M200 232 L218 232 L218 266 C218 270 215 272 211 272 L196 272 C192 272 190 270 190 266 C190 260 194 258 200 258 Z M226 232 L244 232 L244 266 C244 270 241 272 237 272 L222 272 C218 272 216 270 216 266 C216 260 220 258 226 258 Z"},
+    gato:{n:"Gato",d:"M118 122 a44 44 0 1 0 88 0 a44 44 0 1 0 -88 0 M124 96 L112 46 L156 76 Z M200 96 L212 46 L168 76 Z M128 156 C114 182 100 232 98 272 L226 272 C224 232 210 182 196 156 Z M214 270 C252 268 270 240 256 218 C246 204 226 210 226 226 C226 238 240 240 244 232 C246 244 236 254 214 256 Z"},
+    carro:{n:"Carro",d:"M52 232 L52 202 C52 194 58 188 66 188 L84 188 L110 142 C116 130 126 124 140 124 L212 124 C226 124 236 130 242 142 L262 188 L272 190 C280 192 284 198 284 206 L284 232 Z M108 232 a26 26 0 1 0 52 0 a26 26 0 1 0 -52 0 M188 232 a26 26 0 1 0 52 0 a26 26 0 1 0 -52 0",h:"M120 186 L154 186 L154 146 L140 146 C133 146 129 148 127 154 Z M170 186 L228 186 L212 154 C209 148 204 146 198 146 L170 146 Z"},
+    dinosaurio:{n:"Dinosaurio",d:"M118 130 C158 120 204 130 222 152 C234 168 230 192 212 200 C182 212 136 210 116 194 C100 182 102 140 118 130 Z M124 188 L162 188 L162 254 L178 254 L178 272 L124 272 Z M190 194 L222 194 L222 254 L244 254 L244 272 L190 272 Z M58 94 L120 94 C134 94 144 104 144 118 L144 140 C144 150 136 158 126 158 L96 158 L96 146 L54 146 C46 146 42 140 42 132 L42 108 C42 100 48 94 58 94 Z M126 128 C140 124 158 128 166 138 L150 162 L116 156 Z M214 144 C252 138 290 150 310 170 C316 176 312 184 304 182 C274 176 240 184 216 196 Z M136 162 L156 168 L162 184 L146 182 L140 172 Z"},
+    cohete:{n:"Cohete",d:"M160 40 C186 68 202 106 202 148 L202 214 L118 214 L118 148 C118 106 134 68 160 40 Z M118 168 L86 216 C82 222 84 230 92 230 L118 230 Z M202 168 L234 216 C238 222 236 230 228 230 L202 230 Z M136 214 L184 214 L176 244 L144 244 Z M148 244 L172 244 L166 272 L154 272 Z"},
+    maceta:{n:"Maceta",d:"M96 148 L224 148 L206 262 C205 268 200 272 194 272 L126 272 C120 272 115 268 114 262 Z M86 128 L234 128 C240 128 244 132 244 138 L244 148 C244 154 240 158 234 158 L86 158 C80 158 76 154 76 148 L76 138 C76 132 80 128 86 128 Z"},
+    corazon:{n:"Corazón",d:"M160 272 C104 226 52 190 52 150 C52 122 74 104 98 104 C122 104 146 120 160 142 C174 120 198 104 222 104 C246 104 268 122 268 150 C268 190 216 226 160 272 Z"}
+  };
+  const W = 320, LH = 6.2, PLACA = 272, MINW = 3, NS = 'http://www.w3.org/2000/svg';
+  const fig = document.getElementById('figura'), boq = document.getElementById('boquilla');
+  const $ = id => document.getElementById(id);
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const partes = d => d.trim().split(/(?=M)/).filter(Boolean);
+
+  function rebanar(f) {
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = W;
+    const x = cv.getContext('2d', { willReadFrequently: true });
+    partes(f.d).forEach(p => x.fill(new Path2D(p)));
+    if (f.h) { x.globalCompositeOperation = 'destination-out'; partes(f.h).forEach(p => x.fill(new Path2D(p))); }
+    const px = x.getImageData(0, 0, W, W).data, capas = [];
+    for (let y = PLACA - LH / 2; y > 18; y -= LH) {
+      const fila = Math.round(y), tr = []; let ini = null;
+      for (let i = 0; i < W; i++) {
+        const s = px[(fila * W + i) * 4 + 3] > 128;
+        if (s && ini === null) ini = i;
+        else if (!s && ini !== null) { if (i - ini >= MINW) tr.push([ini, i - ini]); ini = null; }
+      }
+      if (ini !== null && W - ini >= MINW) tr.push([ini, W - ini]);
+      if (tr.length) capas.push({ y: y - LH / 2, tr, x0: tr[0][0], x1: tr[tr.length - 1][0] + tr[tr.length - 1][1] });
+    }
+    return capas;
+  }
+  function respaldo() { // si el navegador no puede rebanar, un jarrón simple
+    const out = [];
+    for (let k = 0; k < 30; k++) { const t = k / 29, w = t < .3 ? 84 + 220 * t : t < .7 ? 150 - 190 * (t - .3) : 74 + 113 * (t - .7);
+      const x = (W - w) / 2; out.push({ y: PLACA - (k + 1) * LH, tr: [[x, w]], x0: x, x1: x + w }); }
+    return out;
+  }
+
+  let anterior = '', raf = 0, visible = true, pausa = 0;
+  function siguiente() {
+    const ks = Object.keys(FIGURAS).filter(k => k !== anterior);
+    const k = ks[Math.floor(Math.random() * ks.length)]; anterior = k;
+    let capas; try { capas = rebanar(FIGURAS[k]); } catch { capas = []; }
+    if (!capas.length) capas = respaldo();
+    imprimir(FIGURAS[k].n, capas);
+  }
+
+  function imprimir(nombre, capas) {
+    fig.classList.remove('saliendo'); fig.replaceChildren();
+    $('pieza-nombre').textContent = 'Pieza: ' + nombre;
+    $('estado').classList.remove('listo'); $('estado-txt').textContent = 'Imprimiendo';
+    const rects = capas.map(c => c.tr.map(([x, w]) => {
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', x); r.setAttribute('y', c.y); r.setAttribute('height', LH - 1.3); r.setAttribute('width', 0);
+      r.setAttribute('rx', 1); r.setAttribute('class', 'capa'); r.setAttribute('fill', '#ce2229');
+      fig.appendChild(r); return r;
+    }));
+    const N = capas.length, minTot = 60 + Math.round(Math.random() * 90);
+    if (quieto) {
+      capas.forEach((c, i) => c.tr.forEach(([x, w], j) => rects[i][j].setAttribute('width', w)));
+      terminar(N, minTot, false); boq.style.transform = 'translateY(-60px)'; return;
+    }
+    const porCapa = Math.max(110, Math.min(190, 6400 / N));
+    let t0 = performance.now(), hechas = 0, ultG = 0;
+    boq.classList.add('viajando');
+    const paso = now => {
+      if (!visible) { pausa = now; raf = requestAnimationFrame(paso); return; }
+      if (pausa) { t0 += now - pausa; pausa = 0; }
+      const p = Math.max(0, Math.min(1, (now - t0) / (porCapa * N)));
+      const li = Math.min(N - 1, Math.floor(p * N)), f = p >= 1 ? 1 : p * N - li;
+      while (hechas < li) { // capas terminadas: ancho completo, color asentado
+        capas[hechas].tr.forEach(([x, w], j) => { rects[hechas][j].setAttribute('x', x); rects[hechas][j].setAttribute('width', w); rects[hechas][j].setAttribute('fill', '#ce2229'); });
+        hechas++;
+      }
+      const c = capas[li], ida = li % 2 === 0;
+      const cx = ida ? c.x0 + f * (c.x1 - c.x0) : c.x1 - f * (c.x1 - c.x0);
+      c.tr.forEach(([x, w], j) => {
+        const r = rects[li][j];
+        const a = ida ? x : Math.max(x, cx), b = ida ? Math.min(x + w, cx) : x + w;
+        r.setAttribute('x', a); r.setAttribute('width', Math.max(0, b - a)); r.setAttribute('fill', '#ff5434');
+      });
+      boq.style.transform = `translate(${(cx - 160).toFixed(1)}px, ${(c.y - 12).toFixed(1)}px)`;
+      $('prog').style.width = (p * 100).toFixed(1) + '%';
+      $('h-capa').textContent = `${li + 1}/${N}`;
+      $('h-pct').textContent = Math.floor(p * 100) + '%';
+      $('h-rest').textContent = Math.max(0, Math.round(minTot * (1 - p))) + ' min';
+      if (now - ultG > 140) {
+        ultG = now;
+        $('h-temp').textContent = (214 + Math.round(Math.random() * 2)) + '°C';
+        $('gcode').textContent = `G1 X${(cx * .78 + 2).toFixed(3)} Y${(100 + Math.random() * 40).toFixed(3)} E${(.01 + Math.random() * .02).toFixed(5)}`;
+      }
+      if (p < 1) raf = requestAnimationFrame(paso);
+      else {
+        c.tr.forEach(([x, w], j) => { rects[li][j].setAttribute('x', x); rects[li][j].setAttribute('width', w); rects[li][j].setAttribute('fill', '#ce2229'); });
+        boq.classList.remove('viajando');
+        terminar(N, minTot, true);
+      }
+    };
+    raf = requestAnimationFrame(paso);
+  }
+
+  function terminar(N, minTot, seguir) {
+    boq.style.transform = 'translate(110px, -70px)';
+    $('prog').style.width = '100%'; $('h-capa').textContent = `${N}/${N}`; $('h-pct').textContent = '100%'; $('h-rest').textContent = '0 min';
+    $('estado').classList.add('listo'); $('estado-txt').textContent = 'Impresión terminada';
+    $('gcode').textContent = 'M104 S0 ; apagar boquilla';
+    if (!seguir) return;
+    setTimeout(() => { fig.classList.add('saliendo'); setTimeout(siguiente, 650); }, 2600);
+  }
+
+  // no gastar batería si la cámara no se ve o la pestaña está oculta
+  const cam = document.querySelector('.camara');
+  new IntersectionObserver(es => { visible = es[0].isIntersecting && !document.hidden; }).observe(cam);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) visible = false; });
+  siguiente();
+})();
+
+/* ---------- catálogo ---------- */
+(() => {
+  const g = document.getElementById('cat-grid');
+  g.innerHTML = CONFIG.catalogo.map(p => `
+    <article class="pieza">
+      <div class="foto">${p.foto ? `<img src="${esc(p.foto)}" alt="${esc(p.nombre)}" loading="lazy">` : ''}
+        <div class="sin-foto" ${p.foto ? 'hidden' : ''}><span>Foto en camino</span></div></div>
+      <div class="info"><h3>${esc(p.nombre)}</h3><span class="precio">${esc(p.precio)}</span></div>
+      <p>${esc(p.desc)}</p>
+    </article>`).join('');
+  // si una foto no carga (nombre mal escrito, por ejemplo), se muestra el fondo de capas
+  g.querySelectorAll('img').forEach(img => img.addEventListener('error', () => { img.remove(); }, { once: true }));
+  g.querySelectorAll('.foto').forEach(f => { const i = f.querySelector('img'); if (i) i.addEventListener('error', () => f.querySelector('.sin-foto').hidden = false); });
+})();
+
+/* ---------- cotizador ---------- */
+(() => {
+  const $ = id => document.getElementById(id);
+  const form = $('q-form'), c = CONFIG.costos;
+  const q5 = n => Math.max(c.minimo, Math.round(n / 5) * 5);
+  const fmt = n => "Q" + n.toLocaleString('es-GT');
+  const leer = n => form.querySelector(`input[name="${n}"]:checked`)?.value;
+
+  function calcular() {
+    const t = CONFIG.tipos[$('q-tipo').value];
+    const tam = parseFloat(leer('tam'));
+    const cant = Math.max(1, Math.min(500, parseInt($('q-cant').value) || 1));
+    const disKey = leer('dis'), multi = leer('col') === '2';
+    const gramos = t.gramos * tam * (multi ? 1.5 : 1), horas = t.horas * tam * (multi ? 1.25 : 1);
+    const minPost = t.minPost * (multi ? 1.2 : 1);
+    const prod = gramos * cant * c.filamentoQg * c.factorFallos + horas * cant * c.horaMaquina
+      + (minPost * cant / 60) * c.postQhora + c.empaque * Math.ceil(cant / 10);
+    const dis = CONFIG.diseno[disKey] * c.disenoQhora;
+    let mult = t.mult;
+    for (const v of CONFIG.volumen) { if (cant >= v.desde) { mult *= v.factor; break; } }
+    mult = Math.max(CONFIG.multMinimo, mult);
+    const total = prod * mult + dis * CONFIG.multDiseno;
+    const dias = Math.max(2, Math.ceil((horas * cant + CONFIG.diseno[disKey]) / CONFIG.horasPorDia) + 2);
+    return { bajo: q5(total * CONFIG.rango.bajo), alto: q5(total * CONFIG.rango.alto), cant, dias, tipo: t.nombre, tam, multi, disKey };
+  }
+
+  function pintar() {
+    const r = calcular();
+    $('q-precio').textContent = r.bajo === r.alto ? fmt(r.bajo) : `${fmt(r.bajo)} a ${fmt(r.alto)}`;
+    $('q-unit').textContent = r.cant > 1 ? fmt(Math.round((r.bajo + r.alto) / 2 / r.cant)) : '—';
+    $('q-dias').textContent = `${r.dias} a ${r.dias + 2} días`;
+    $('q-tip').textContent =
+      r.cant === 1 && r.disKey !== 'archivo' ? 'El diseño se cobra una sola vez. Si pedís 3 o más piezas iguales, el precio por unidad baja bastante.' :
+      r.cant >= 10 && r.cant < 25 ? 'Ya tenés precio de volumen. Desde 25 piezas baja otro escalón.' :
+      r.multi ? 'El multicolor se ve muy bien pero gasta más material. Si el presupuesto está justo, un color rinde más.' :
+      '¿Tenés una fecha límite? Decínosla en el mensaje y te confirmamos si llegamos.';
+    const tamTxt = r.tam < 1 ? 'pequeña, cabe en la mano' : r.tam > 1 ? 'grande' : 'mediana, como una taza';
+    const disTxt = { archivo: 'ya tengo el archivo 3D', simple: 'solo un nombre o logo', cero: 'hay que diseñarlo desde cero' }[r.disKey];
+    const msg = `¡Hola! Cotizé en su página y me salió esto:\n\n• Pieza: ${r.tipo}\n• Tamaño: ${tamTxt}\n• Cantidad: ${r.cant}\n• Diseño: ${disTxt}\n• Colores: ${r.multi ? 'dos o más' : 'un color'}\n• Estimado: ${fmt(r.bajo)} a ${fmt(r.alto)}\n\n¿Me confirman el precio?`;
+    $('q-wa').href = waBase + "?text=" + encodeURIComponent(msg);
+  }
+  form.addEventListener('input', pintar); form.addEventListener('change', pintar); pintar();
+})();
+
+/* ---------- botón flotante en el teléfono ---------- */
+(() => {
+  const flota = document.getElementById('flota');
+  const ocultan = [document.querySelector('.hero'), document.getElementById('cotizar'), document.querySelector('.cierre'), document.querySelector('footer')];
+  const vis = new Map();
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => vis.set(e.target, e.isIntersecting));
+    flota.classList.toggle('visible', ![...vis.values()].some(Boolean));
+  }, { threshold: 0.05 });
+  ocultan.forEach(el => el && io.observe(el));
+})();
+</script>
+</body>
+</html>
