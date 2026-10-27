@@ -543,19 +543,19 @@ const CONFIG = {
     filamentoQg:  0.169,
     factorFallos: 1.12,
     horaMaquina:  2.27,
-    postQhora:    30,
-    disenoQhora:  100,
+    postQhora:    10,
+    disenoQhora:  30,
     empaque:      6,
     minimo:       50
   },
 
   // Material y tiempo que asume cada tipo de pieza (por unidad).
   tipos: {
-    pequeno:    { gramos: 9,   horas: 0.45, minPost: 4,  mult: 4.6, nombre:"Llavero o pieza pequeña personalizada" },
-    decorativo: { gramos: 85,  horas: 3.8,  minPost: 10, mult: 4.0, nombre:"Figura o pieza decorativa" },
+    pequeno:    { gramos: 9,   horas: 0.45, minPost: 5,  mult: 4.2, nombre:"Llavero o pieza pequeña personalizada" },
+    decorativo: { gramos: 85,  horas: 3.8,  minPost: 10, mult: 3.6, nombre:"Figura o pieza decorativa" },
     funcional:  { gramos: 45,  horas: 2.4,  minPost: 8,  mult: 2.3, nombre:"Repuesto o pieza funcional" },
-    grande:     { gramos: 240, horas: 10.5, minPost: 20, mult: 3.4, nombre:"Pieza grande" },
-    negocio:    { gramos: 30,  horas: 1.4,  minPost: 6,  mult: 3.0, nombre:"Pedido para negocio" }
+    grande:     { gramos: 240, horas: 10.5, minPost: 20, mult: 3.0, nombre:"Pieza grande" },
+    negocio:    { gramos: 25,  horas: 1.4,  minPost: 6,  mult: 2.8, nombre:"Pedido para negocio" }
   },
   diseno: { archivo: 0, simple: 0.25, cero: 2.5 },
   multDiseno: 1.25,
@@ -568,12 +568,15 @@ const CONFIG = {
      La foto va en la carpeta img/ junto a este archivo.
      El nombre tiene que coincidir letra por letra (mayúsculas incluidas). */
   catalogo: [
-    { nombre:"Llaveros personalizados", desc:"Con tu nombre, tus iniciales o tus colores favoritos.", precio:"Desde Q30 c/u", foto:"img/Llaveros.jpeg" },
-    { nombre:"Diseño a tu medida", desc:"¿Tenés la idea pero no el archivo? Lo diseñamos para que calce exacto.", precio:"Desde Q95", foto:"img/Funda.jpeg" },
-    { nombre:"Recuerditos", desc:"Detalles pequeños para regalar en cumpleaños, bodas o eventos.", precio:"Desde Q25", foto:"img/Gatitos.jpeg" },
-    { nombre:"Proyectos completos", desc:"Lo diseñamos, lo imprimimos y te lo entregamos armado.", precio:"Desde Q150", foto:"img/Rueda.jpeg" },
-    { nombre:"Figuras articuladas", desc:"Salen armadas de la impresora y todas las articulaciones se mueven.", precio:"Desde Q65", foto:"img/cangrejo.jpeg" },
-    { nombre:"Regalos con presupuesto", desc:"Ideas que gustan y se ajustan a tu bolsillo.", precio:"Desde Q30", foto:"img/Lagarto.jpeg" }
+    { nombre:"Llaveros personalizados para tu negocio", desc:"Con tu nombre, tus iniciales o tus colores favoritos.", precio:"Desde 10 unidades", foto:"img/10794dcd-5e0a-48e2-addc-75f52039f543.jpg" },
+    { nombre:"Diseño a tu medida", desc:"¿Tenés la idea pero no el archivo? Lo diseñamos para que calce exacto.", precio:"Desde Q50", foto:"img/1000480069.jpg" },
+    { nombre:"Muñequito", desc:"Detalles pequeños para regalar en cualquier ocasion pueden ser lo que imagines.", precio:"Desde Q25", foto:"img/1000466643.jpg" },
+    { nombre:"Proyectos completos", desc:"Lo diseñamos, lo imprimimos y te lo entregamos armado.", precio:"Desde 75", foto:"img/1000469175.jpeg" },
+    { nombre:"Figuras articuladas", desc:"Salen armadas de la impresora y todas las articulaciones se mueven.", precio:"Desde Q35", foto:"img/1000466505.jpeg" },
+    { nombre:"Proyectos desde 0", desc:"Diseñamos desde el inicio si no tienes nada para tu proyecto.", precio:"Desde Q100", foto:"img/1000481877.jpeg" },
+    { nombre:"Piezas utiles", desc:"Para lo que necesites, se puede hacer.", precio:"Desde Q25", foto:"img/1000481877.jpeg" }, //poner los soportes del play
+    { nombre:"Amante de algun personaje", desc:"Se puede hacer culquier figura que te guste.", precio:"Desde Q30", foto:"img/1000478379.jpeg" },
+    { nombre:"No consigues en ningun lado", desc:"Podemos diseñar todo a partir de una imagen con los colores que quieras.", precio:"Desde Q35", foto:"img/1000478947.jpeg" }
   ]
 };
 
