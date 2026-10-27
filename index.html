@@ -37,6 +37,7 @@
   --maquina:'IBM Plex Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+*[hidden]{display:none !important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--hueso);color:var(--grafito);font-family:var(--texto);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}
@@ -534,35 +535,40 @@ footer nav a:hover{color:#fff}
    ============================================================ */
 const CONFIG = {
   marca:     "EJEPRINT",
-  whatsapp:  "50255673291",   // 502 + tu número, sin espacios
-  instagram: "https://www.instagram.com/ejeprint",
-  tiktok:    "https://www.tiktok.com/@ejeprintgt",
+  whatsapp:  "50255673291",  
+  instagram: "https://www.instagram.com/ejeprintsgt?cplk=MWwxbGd1cXgzNGgwdA%3D%3D&utm_source=qr",
+  tiktok:    "https://www.tiktok.com/@ejeprintsgt",
 
-  // Mismos números que tu app (Ajustes). Si cambiás allá, cambialos aquí.
+  // Costos base y tarifas por hora
   costos: {
-    filamentoQg:  0.169,
-    factorFallos: 1.12,
-    horaMaquina:  2.27,
-    postQhora:    10,
-    disenoQhora:  30,
-    empaque:      6,
-    minimo:       50
+    filamentoQg:  0.169, // Q/g (Costo por gramo)
+    factorFallos: 1.12,  // 12% extra por purga y fallos
+    horaMaquina:  20,    // Q/h (Meta por hora-máquina)
+    postQhora:    15,    // Q/h (Tu tiempo de acabado)
+    disenoQhora:  45,    // Q/h (Tarifa de diseño normal)
+    empaque:      0,     // Q por pedido
+    luzKwh:       1.86,  // Q por kWh
+    consumoKw:    0.12,  // kW promedio de la impresora (ajustalo a tu equipo)
+    minimo:       50     // Pedido mínimo
   },
 
-  // Material y tiempo que asume cada tipo de pieza (por unidad).
+  // Multiplicadores por tipo de trabajo
   tipos: {
-    pequeno:    { gramos: 9,   horas: 0.45, minPost: 5,  mult: 4.2, nombre:"Llavero o pieza pequeña personalizada" },
-    decorativo: { gramos: 85,  horas: 3.8,  minPost: 10, mult: 3.6, nombre:"Figura o pieza decorativa" },
-    funcional:  { gramos: 45,  horas: 2.4,  minPost: 8,  mult: 2.3, nombre:"Repuesto o pieza funcional" },
-    grande:     { gramos: 240, horas: 10.5, minPost: 20, mult: 3.0, nombre:"Pieza grande" },
-    negocio:    { gramos: 25,  horas: 1.4,  minPost: 6,  mult: 2.8, nombre:"Pedido para negocio" }
+    pequeno:    { gramos: 5,   horas: 0.40, horasLote: 0.07, minPost: 4, minPostLote: 1.2, mult: 4.0, nombre:"Llavero o pieza pequeña personalizada" }, // Personalizado
+    decorativo: { gramos: 85,  horas: 3.8,  minPost: 10, mult: 3.5, nombre:"Figura o pieza decorativa" },           // Producto de catálogo
+    funcional:  { gramos: 45,  horas: 2.4,  minPost: 8,  mult: 2.2, nombre:"Repuesto o pieza funcional" },          // Funcional o prototipo
+    grande:     { gramos: 240, horas: 10.5, minPost: 20, mult: 3.5, nombre:"Pieza grande" },
+    negocio:    { gramos: 25,  horas: 1.4,  horasLote: 0.6, minPost: 6, minPostLote: 3, mult: 2.5, nombre:"Pedido para negocio" }                 // Corporativo o volumen
   },
   diseno: { archivo: 0, simple: 0.25, cero: 2.5 },
-  multDiseno: 1.25,
-  rango: { bajo: 0.90, alto: 1.25 },
-  volumen: [ {desde: 25, factor: 0.78}, {desde: 10, factor: 0.86} ],
-  multMinimo: 1.9,
+  multDiseno: 1.0, // Apagado: no infla la tarifa de diseño
+  rango: { bajo: 0.90, alto: 1.20 },
+  volumen: [ {desde: 100, factor: 0.45}, {desde: 50, factor: 0.50}, {desde: 25, factor: 0.62}, {desde: 10, factor: 0.80} ],
+  multMinimo: 1.5,   // margen mínimo sobre costo (antes 1.9)
+  suavizado: 150,    // Q de costo por pieza a partir del cual el multiplicador empieza a bajar
   horasPorDia: 8,
+
+  
 
   /* --- CATÁLOGO ---
      La foto va en la carpeta img/ junto a este archivo.
@@ -570,13 +576,13 @@ const CONFIG = {
   catalogo: [
     { nombre:"Llaveros personalizados para tu negocio", desc:"Con tu nombre, tus iniciales o tus colores favoritos.", precio:"Desde 10 unidades", foto:"img/10794dcd-5e0a-48e2-addc-75f52039f543.jpg" },
     { nombre:"Diseño a tu medida", desc:"¿Tenés la idea pero no el archivo? Lo diseñamos para que calce exacto.", precio:"Desde Q50", foto:"img/1000480069.jpg" },
-    { nombre:"Muñequito", desc:"Detalles pequeños para regalar en cualquier ocasion pueden ser lo que imagines.", precio:"Desde Q25", foto:"img/1000466643.jpg" },
-    { nombre:"Proyectos completos", desc:"Lo diseñamos, lo imprimimos y te lo entregamos armado.", precio:"Desde 75", foto:"img/1000469175.jpeg" },
-    { nombre:"Figuras articuladas", desc:"Salen armadas de la impresora y todas las articulaciones se mueven.", precio:"Desde Q35", foto:"img/1000466505.jpeg" },
-    { nombre:"Proyectos desde 0", desc:"Diseñamos desde el inicio si no tienes nada para tu proyecto.", precio:"Desde Q100", foto:"img/1000481877.jpeg" },
-    { nombre:"Piezas utiles", desc:"Para lo que necesites, se puede hacer.", precio:"Desde Q25", foto:"img/1000481877.jpeg" }, //poner los soportes del play
-    { nombre:"Amante de algun personaje", desc:"Se puede hacer culquier figura que te guste.", precio:"Desde Q30", foto:"img/1000478379.jpeg" },
-    { nombre:"No consigues en ningun lado", desc:"Podemos diseñar todo a partir de una imagen con los colores que quieras.", precio:"Desde Q35", foto:"img/1000478947.jpeg" }
+    { nombre:"Animalitos", desc:"Detalles pequeños para regalar en cualquier ocasion pueden ser lo que imagines.", precio:"Desde Q25", foto:"img/1000466643.jpg" },
+    { nombre:"Proyectos completos", desc:"Lo diseñamos, lo imprimimos y te lo entregamos armado.", precio:"Desde 75", foto:"img/1000469175.jpg" },
+    { nombre:"Figuras articuladas", desc:"Salen armadas de la impresora y todas las articulaciones se mueven.", precio:"Desde Q35", foto:"img/1000466505.jpg" },
+    { nombre:"Proyectos desde 0", desc:"Diseñamos desde el inicio si no tienes nada para tu proyecto.", precio:"Desde Q100", foto:"img/1000481877.jpg" },
+    { nombre:"Piezas utiles", desc:"Para lo que necesites, se puede hacer.", precio:"Desde Q25", foto:"img/Soporte.jpeg " }, //poner los soportes del play
+    { nombre:"Amante de algun personaje", desc:"Se puede hacer culquier figura que te guste.", precio:"Desde Q30", foto:"img/1000478379.jpg" },
+    { nombre:"No consigues en ningun lado", desc:"Podemos diseñar todo a partir de una imagen con los colores que quieras.", precio:"Desde Q35", foto:"img/1000478947.jpg" }
   ]
 };
 
@@ -748,12 +754,17 @@ document.querySelectorAll('[data-c]').forEach(e => e.style.setProperty('--c', e.
     const tam = parseFloat(leer('tam'));
     const cant = Math.max(1, Math.min(500, parseInt($('q-cant').value) || 1));
     const disKey = leer('dis'), multi = leer('col') === '2';
-    const gramos = t.gramos * tam * (multi ? 1.5 : 1), horas = t.horas * tam * (multi ? 1.25 : 1);
-    const minPost = t.minPost * (multi ? 1.2 : 1);
-    const prod = gramos * cant * c.filamentoQg * c.factorFallos + horas * cant * c.horaMaquina
+    const fH = tam * (multi ? 1.25 : 1), fP = multi ? 1.2 : 1;
+    const gramos = t.gramos * tam * (multi ? 1.5 : 1);
+    // Impresión en lote: la 1ª pieza lleva el tiempo completo, las demás van en la misma placa (horasLote / minPostLote)
+    const horas = (t.horas + (cant - 1) * (t.horasLote ?? t.horas)) * fH / cant;
+    const minPost = (t.minPost + (cant - 1) * (t.minPostLote ?? t.minPost)) * fP / cant;
+    const prod = gramos * cant * c.filamentoQg * c.factorFallos + horas * cant * (c.horaMaquina + c.luzKwh * c.consumoKw)
       + (minPost * cant / 60) * c.postQhora + c.empaque * Math.ceil(cant / 10);
     const dis = CONFIG.diseno[disKey] * c.disenoQhora;
-    let mult = t.mult;
+    // El multiplicador del tipo aplica completo a piezas baratas y baja en piezas caras
+    // (la hora-máquina ya incluye tu ganancia, así no se cobra doble margen).
+    let mult = 1 + (t.mult - 1) / (1 + (prod / cant) / CONFIG.suavizado);
     for (const v of CONFIG.volumen) { if (cant >= v.desde) { mult *= v.factor; break; } }
     mult = Math.max(CONFIG.multMinimo, mult);
     const total = prod * mult + dis * CONFIG.multDiseno;
